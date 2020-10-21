@@ -1,0 +1,10 @@
+add ~/music
+refresh 
+RE
+set color_win_cur_sel_bg=blue
+set color_win_cur_sel_bg=lightred
+set color_win_cur_sel_bg=red
+add ~/music/
+q
+colorscheme default
+colorscheme gruvbox
