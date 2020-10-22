@@ -107,7 +107,7 @@ label-muted-foreground = ${colors.foreground-alt}
 
 [module/cmusget]
 type = custom/script
-exec = /home/spence/.scripts/cmusget.sh
+exec = /home/spence/.config/polybar/cmusget.sh
 exec-if = "pgrep cmus"
 format-padding = 1
 interval = 1

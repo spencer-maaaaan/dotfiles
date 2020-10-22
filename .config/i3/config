@@ -32,7 +32,7 @@ focus_wrapping force
 # colors of window borders
 # class                 border  backgr. text    indicator child_border
 client.focused          #a89984 #a89984 #ebdbb2 #a89984   #a89984
-client.focused_inactive #282828 #a89984 #ebdbb2 #a89984   #282828
+client.focused_inactive #282828 #a89984 #ebdbb2 #282828   #282828
 client.unfocused        #282828 #282828 #a89984 #282828   #282828
 client.urgent           #282828 #cc241d #ebdbb2 #cc241d   #cc241d
 
@@ -99,11 +99,8 @@ bindsym $mod+Shift+Down resize grow height 5 px or 5 ppt
 bindsym $mod+Shift+Up resize shrink height 5 px or 5 ppt
 bindsym $mod+Shift+Right resize grow width 5 px or 5 ppt
 
-# activate horizontal split mode
-bindsym $mod+h split h
-
-# activate vertical split mode
-bindsym $mod+v split v
+# toggle between vertical and horizontal split mode
+bindsym $mod+space split toggle
 
 # enter fullscreen mode for the focused window
 bindsym $mod+f fullscreen toggle
