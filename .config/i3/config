@@ -15,7 +15,7 @@ set $term urxvt -e fish
 set $filemanager urxvt -e ranger 
 set $browser firefox
 set $chat discord
-set $texteditor urxvt -e vim
+set $texteditor urxvt code
 set $musicplayer urxvt -e cmus
 set $sysmonitor urxvt -e ytop
 set $volumectl pavucontrol
@@ -31,12 +31,12 @@ focus_wrapping force
 
 # colors of window borders
 # class                 border  backgr. text    indicator child_border
-client.focused          #a89984 #a89984 #ffffff #a89984   #a89984
-client.focused_inactive #282828 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #282828 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.focused          #a89984 #a89984 #ebdbb2 #a89984   #a89984
+client.focused_inactive #282828 #a89984 #ebdbb2 #a89984   #282828
+client.unfocused        #282828 #282828 #a89984 #282828   #282828
+client.urgent           #282828 #cc241d #ebdbb2 #cc241d   #cc241d
 
-# Font for window titlebars
+# font for window titlebars
 font pango:terminus 8
 
 # running some apps on startup
@@ -52,7 +52,7 @@ for_window [instance="dropdown_*"] move scratchpad
 for_window [instance="dropdown_*"] sticky enable
 
 # scratchpad applications
-exec_always urxvt -name "dropdown_term" -e fish
+exec urxvt -name "dropdown_term" -e fish
 
 # binding to show scratchpad apps
 bindsym $mod+t [instance="dropdown_term"] scratchpad show
@@ -62,7 +62,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+e exec $filemanager
 bindsym $mod+b exec $browser
 bindsym $mod+i exec $chat
-
+bindsym $mod+c exec $texteditor
 bindsym $mod+F2 exec $sysmonitor
 bindsym $mod+F3 exec $volumectl
 bindsym $mod+F5 exec $musicplayer
@@ -74,7 +74,7 @@ bindsym $mod+w kill
 # start rofi application runner
 bindsym $mod+r exec rofi -show run
 
-# start rofi window switcher
+# start rofi window pager
 bindsym $mod+Tab exec rofi -show window
 
 # window manipulation
@@ -99,26 +99,20 @@ bindsym $mod+Shift+Down resize grow height 5 px or 5 ppt
 bindsym $mod+Shift+Up resize shrink height 5 px or 5 ppt
 bindsym $mod+Shift+Right resize grow width 5 px or 5 ppt
 
-# split in horizontal orientation
+# activate horizontal split mode
 bindsym $mod+h split h
 
-# split in vertical orientation
+# activate vertical split mode
 bindsym $mod+v split v
 
-# enter fullscreen mode for the focused container
+# enter fullscreen mode for the focused window
 bindsym $mod+f fullscreen toggle
 
-# toggle tiling / floating
+# toggle tiling / floating for focused window
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
-# bindsym $mod+Tab focus mode_toggle
-
-# focus the parent container
+# focus the parent of container
 bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
