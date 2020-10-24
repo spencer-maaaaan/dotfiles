@@ -31,8 +31,8 @@ focus_wrapping force
 
 # colors of window borders
 # class                 border  backgr. text    indicator child_border
-client.focused          #a89984 #a89984 #ebdbb2 #a89984   #a89984
-client.focused_inactive #282828 #a89984 #ebdbb2 #282828   #282828
+client.focused          #a89984 #282828 #ebdbb2 #a89984   #a89984
+client.focused_inactive #282828 #282828 #ebdbb2 #282828   #282828
 client.unfocused        #282828 #282828 #a89984 #282828   #282828
 client.urgent           #282828 #cc241d #ebdbb2 #cc241d   #cc241d
 
