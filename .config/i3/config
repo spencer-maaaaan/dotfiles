@@ -57,6 +57,10 @@ for_window [instance="dragon"] border none
 for_window [instance="dragon"] move position center
 for_window [instance="dragon"] move up 500
 
+# rules for firefox picture in picture player
+for_window [title="Picture-in-Picture"] sticky enable
+for_window [title="Picture-in-Picture"] border none
+
 # application shortcuts
 bindsym $mod+Return exec $term
 bindsym $mod+e exec $filemanager
