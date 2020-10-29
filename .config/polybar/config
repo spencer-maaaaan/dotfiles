@@ -41,7 +41,7 @@ padding-left = 0
 padding-right = 2
 
 module-margin-left = 1
-module-margin-right = 2
+module-margin-right = 1
 
 font-0 = xos4 terminus:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=10:antialias=false
@@ -49,7 +49,7 @@ font-2 = siji:pixelsize=10
 
 modules-left = i3 xwindow
 modules-center = date
-modules-right = cmusget pulseaudio 
+modules-right = cmusget pulseaudio network
 
 wm-restack = i3
 
@@ -92,10 +92,16 @@ label-urgent-padding = 2
 type = internal/date
 interval = 1
 
-date = %b %d
+date = %a, %b %d
 time = %I:%M %P
 
-label = %date%, %time%
+label = %date% - %time%
+
+[module/network]
+type = internal/network
+interface = enp2s0
+label-connected = %local_ip%
+label-disconnected = 
 
 [module/pulseaudio]
 type = internal/pulseaudio
