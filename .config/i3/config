@@ -15,7 +15,7 @@ gaps inner 10
 font terminus 8
 
 # setting wallpaper
-exec --no-startup-id xwallpaper --zoom ~/.config/wall
+exec --no-startup-id xwallpaper --zoom ~/.config/wall.png
 
 # starting polybar with startup script
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
