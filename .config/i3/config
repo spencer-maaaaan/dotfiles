@@ -1,119 +1,154 @@
-# spencer tenney's i3 configuration file
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
 
-
-# setting variables
-set $mod Mod4
-set $term urxvt -e fish
-set $filemanager urxvt -e ranger 
-set $browser firefox
-set $chat discord
-set $texteditor urxvt code
-set $musicplayer urxvt -e cmus
-set $sysmonitor urxvt -e ytop
-set $volumectl pavucontrol
-
-
-# setting borders/gaps
-gaps inner 10
-gaps outer 0
+### Window Appearance
 default_border pixel 2
+gaps inner 10
+font terminus 8
 
-# settings
-focus_wrapping force
+# setting wallpaper
+exec --no-startup-id xwallpaper --zoom ~/.config/wall
 
-# colors of window borders
-# class                 border  backgr. text    indicator child_border
-client.focused          #a89984 #282828 #ebdbb2 #a89984   #a89984
-client.focused_inactive #282828 #282828 #ebdbb2 #282828   #282828
-client.unfocused        #282828 #282828 #a89984 #282828   #282828
-client.urgent           #282828 #cc241d #ebdbb2 #cc241d   #cc241d
+# starting polybar with startup script
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-# font for window titlebars
-font pango:terminus 8
+# starting up notif daemon
+exec --no-startup-id dunst
 
-# running some apps on startup
-exec_always --no-startup-id bash $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id dunst
-exec --no-startup-id picom -b
-exec xwallpaper --zoom ~/.config/wall.png
-exec xset s -dpms && xset s 3600 3600
+#class                   border  backgr. text    indicator child_border
+ client.focused          #d0d0d0 #d0d0d0 #2c2c2c #626262   #d0d0d0
+ client.focused_inactive #4e4e4e #4e4e4e #d0d0d0 #4e4e4e   #2c2c2c
+ client.unfocused        #2c2c2c #2c2c2c #d0d0d0 #292d2e   #2c2c2c
+ client.urgent           #d68787 #d68787 #d0d0d0 #d68787   #d68787
+ client.placeholder      #85add4 #81a1c1 #d0d0d0 #d0d0d0   #81a1c1
 
-# rules for scratchpad applications
-for_window [instance="dropdown_*"] floating enable
-for_window [instance="dropdown_*"] move scratchpad
-for_window [instance="dropdown_*"] sticky enable
-for_window [instance="dropdown_*"] border pixel 1
+ client.background       #171717
 
-# scratchpad applications
-exec urxvt -name "dropdown_term" -e fish
-
-# binding to show scratchpad apps
-bindsym $mod+t [instance="dropdown_term"] scratchpad show
-
-# some rules for dragon, which allows drag+drop from ranger filemanager
-for_window [instance="dragon"] floating enable
-for_window [instance="dragon"] sticky enable
-for_window [instance="dragon"] border none
-for_window [instance="dragon"] move position center
-for_window [instance="dragon"] move up 500
-
-# rules for firefox picture in picture player
+# window rules
+# rules for firefox pip video player
 for_window [title="Picture-in-Picture"] sticky enable
 for_window [title="Picture-in-Picture"] border none
 
-# application shortcuts
-bindsym $mod+Return exec $term
-bindsym $mod+e exec $filemanager
-bindsym $mod+b exec $browser
-bindsym $mod+i exec $chat
-bindsym $mod+c exec $texteditor
-bindsym $mod+F2 exec $sysmonitor
-bindsym $mod+F3 exec $volumectl
-bindsym $mod+F5 exec $musicplayer
-bindsym $mod+F6 exec firefox --new-window https://www.youtube.com/feed/subscriptions
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
 
-# kill focused window
-bindsym $mod+w kill
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-# start rofi application runner
-bindsym $mod+r exec rofi -show run
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
 
-# start rofi window pager
-bindsym $mod+Tab exec rofi -show window
+# Use pactl to adjust volume in PulseAudio.
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-# window manipulation
-# mouse + mod for window moving
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $left h
+set $down j
+set $up k
+set $right l
+
+# setting modkey to super key
+set $mod Mod4
+
+# use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# start a terminal
+bindsym $mod+Return exec alacritty -e fish
+
+# open ranger
+bindsym $mod+shift+e exec alacritty -e ranger
+
+# open firefox
+bindsym $mod+shift+b exec firefox
+
+# kill focused window
+bindsym $mod+shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+r exec rofi -show run
+
+# make active window sticky
+bindsym $mod+ctrl+s sticky toggle
+
+# search all windows by name with rofi
+bindsym $mod+Tab exec rofi -show window
+
+#screenshots
+bindsym $mod+p exec maim | xclip -selection c -t image/png && notify-send "maim" "output copied to clipboard"
+bindsym $mod+shift+p exec maim -s | xclip -selection c -t image/png && notify-send "maim" "selection copied to clipboard"
+bindsym $mod+ctrl+p exec maim -i $(xdotool getactivewindow) | xclip -selection c -t image/png && notify-send "maim" "window copied to clipboard"
+
 # change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Control+Left move left
-bindsym $mod+Control+Down move down
-bindsym $mod+Control+Up move up
-bindsym $mod+Control+Right move right
+bindsym $mod+shift+$left move left
+bindsym $mod+shift+$down move down
+bindsym $mod+shift+$up move up
+bindsym $mod+shift+$right move right
 
-# resize focused window
-bindsym $mod+Shift+Left resize shrink width 5 px or 5 ppt
-bindsym $mod+Shift+Down resize grow height 5 px or 5 ppt
-bindsym $mod+Shift+Up resize shrink height 5 px or 5 ppt
-bindsym $mod+Shift+Right resize grow width 5 px or 5 ppt
+# alternatively, you can use the cursor keys:
+bindsym $mod+shift+Left move left
+bindsym $mod+shift+Down move down
+bindsym $mod+shift+Up move up
+bindsym $mod+shift+Right move right
 
-# toggle between vertical and horizontal split mode
-bindsym $mod+space split toggle
+# split in horizontal orientation
+bindsym $mod+b split h
 
-# enter fullscreen mode for the focused window
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# toggle tiling / floating for focused window
-bindsym $mod+Shift+space floating toggle
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
 
-# focus the parent of container
-bindsym $mod+a [workspace=workspace] focus
+# toggle tiling / floating
+bindsym $mod+shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -141,21 +176,39 @@ bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1, workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2, workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3, workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4, workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5, workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6, workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7, workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8, workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9, workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10, workspace number $ws10
+bindsym $mod+shift+1 move container to workspace number $ws1
+bindsym $mod+shift+2 move container to workspace number $ws2
+bindsym $mod+shift+3 move container to workspace number $ws3
+bindsym $mod+shift+4 move container to workspace number $ws4
+bindsym $mod+shift+5 move container to workspace number $ws5
+bindsym $mod+shift+6 move container to workspace number $ws6
+bindsym $mod+shift+7 move container to workspace number $ws7
+bindsym $mod+shift+8 move container to workspace number $ws8
+bindsym $mod+shift+9 move container to workspace number $ws9
+bindsym $mod+shift+0 move container to workspace number $ws10
 
+# resize mode
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 10 px
+        bindsym $down       resize grow height 10 px
+        bindsym $up         resize shrink height 10 px
+        bindsym $right      resize grow width 10 px
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+d mode "resize"
 
 # reload the configuration file
-# bindsym $mod+Shift+r reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+shift+c reload
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q exit
+bindsym $mod+ctrl+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
