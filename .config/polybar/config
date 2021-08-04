@@ -144,7 +144,7 @@ ramp-volume-2 = 墳
 type = internal/battery
 battery = BAT0
 adapter = AC
-full-at = 98
+full-at = 100
 
 ;["","","","","","","","","",""]
 label-charging = %percentage%%
