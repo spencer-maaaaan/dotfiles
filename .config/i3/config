@@ -20,8 +20,11 @@ exec --no-startup-id xwallpaper --zoom ~/.config/wall.png
 # starting polybar with startup script
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-# starting up notif daemon
+# starting notif daemon
 exec --no-startup-id dunst
+
+# starting compositer
+exec --no-startup-id picom -b
 
 #class                   border  backgr. text    indicator child_border
  client.focused          #d0d0d0 #d0d0d0 #2c2c2c #626262   #d0d0d0
@@ -42,7 +45,8 @@ for_window [title="Picture-in-Picture"] border none
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xset 600
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.

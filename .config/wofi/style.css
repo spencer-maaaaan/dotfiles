@@ -1,0 +1,19 @@
+#window {
+        background-color: #171717;
+}
+#inner-box{
+	background-color: #171717;
+	color: #d0d0d0;
+}
+#entry{
+	background-color: #171717;
+	color: #d0d0d0;
+}
+#entry:selected{
+	background-color: #4e4e4e;
+	color: #171717;
+}
+#input{
+	background-color: #171717;
+        color: #ffffff
+}

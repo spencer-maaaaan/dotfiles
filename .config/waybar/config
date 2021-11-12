@@ -1,0 +1,76 @@
+{
+	//position of bar and modules
+	"layer":"top",
+	"position":"top",
+	"height":20,
+
+	"modules-left":["sway/workspaces","sway/mode","sway/window"],
+	"modules-center":["clock#time"],
+	"modules-right":["idle_inhibitor","pulseaudio","backlight","battery","network","clock#date","custom/sleepy"],
+	
+	//module configuration
+	"sway/workspaces":{
+		"all-outputs":true
+	},
+
+	"clock#date":{
+		"format":" {:%a, %b %d}",
+		"tooltip-format":"{calendar}",
+		"today-format":"<b>{}</b>",
+	},
+
+	"clock#time":{
+		"interval":1,	
+		"format":"{:%I:%M %P}",
+	},
+
+	"pulseaudio":{
+		"format":"墳 {volume}%",
+		"format-muted":"婢",
+		"on-click":"amixer set Master toggle",
+		"on-click-right":"pavucontrol",
+		"states":{
+			"mid":60,
+			"low":20,
+			"lower":10,
+		},
+		"format-icons":["奄","奔","墳"]
+	},
+
+	"backlight":{
+		"format":" {percent}%",
+		"output":"eDP-1",
+		"on-scroll-up":"brightnessctl set +1%",
+		"on-scroll-down":"brightnessctl set 1%-"
+	},
+
+	"battery":{
+		"interval":5,
+		"format-time":"{H}h {M}m",
+		"format-full":"{icon} {capacity}%",
+		"format-charging":"{icon} {capacity}%",
+		"format-discharging":"{icon} {capacity}%",
+		"format-unknown":"{icon} {capacity}%",
+		"format-icons":["","","","","","","","","",""],
+	},
+
+	"network":{
+		"format-wifi":" {essid}",
+		"format-ethernet":"歷 {ipaddr}",
+		"format-disconnected":"disconnected",
+	},
+
+	"custom/sleepy":{
+		"format":"u_u",
+		"on-click":"systemctl suspend"
+		
+	},
+
+	"idle_inhibitor":{
+		"format":"{icon}",
+		"format-icons":{
+			"activated":"零",
+			"deactivated":"鈴"
+		}
+	}	
+}
